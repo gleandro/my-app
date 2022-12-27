@@ -13,12 +13,15 @@ const Statistics = ({ good, regular, bad }) => {
   return (
     total === 0 ? salida :
       <div>
-        <div>good {good}</div>
-        <div>regular {regular}</div>
-        <div>bad {bad}</div>
-        <div>-----------------------</div>
-        <div>all {total}</div>
-        <div>positive {positive}</div>
+        <table>
+          <tbody>
+            <tr><td>good</td><td> {good}</td></tr>
+            <tr><td>regular</td><td> {regular}</td></tr>
+            <tr><td>bad</td><td> {bad}</td></tr>
+            <tr><td>all</td><td> {total}</td></tr>
+            <tr><td>positive</td><td> {positive}</td></tr>
+          </tbody>
+        </table>
       </div>
   )
 }
