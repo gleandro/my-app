@@ -5,21 +5,21 @@ const Button = ({ name, onClick }) => (
   <button onClick={onClick}>{name}</button>
 )
 
-const State = ({ name, value }) => (
-  <div>
-    {name} {value}
-  </div>
-)
-
-const Statics = ({ good, regular, bad }) => {
+const Statistics = ({ good, regular, bad }) => {
   let total = good + regular + bad
   let positive = good / total * 100
+  let salida = "No existen datos"
+
   return (
-    <div>
-      <div>all {total}</div>
-      <div>average 9</div>
-      <div>positive {positive}</div>
-    </div>
+    total === 0 ? salida :
+      <div>
+        <div>good {good}</div>
+        <div>regular {regular}</div>
+        <div>bad {bad}</div>
+        <div>-----------------------</div>
+        <div>all {total}</div>
+        <div>positive {positive}</div>
+      </div>
   )
 }
 const App = () => {
@@ -39,10 +39,7 @@ const App = () => {
       <Button name="neutral" onClick={() => setValue(setRegular, regular)} />
       <Button name="bad" onClick={() => setValue(setBad, bad)} />
       <h2>Stadistics</h2>
-      <State name="good" value={good} />
-      <State name="neutral" value={regular} />
-      <State name="bad" value={bad} />
-      <Statics good={good} regular={regular} bad={bad} />
+      <Statistics good={good} regular={regular} bad={bad} />
     </div>
   )
 }
