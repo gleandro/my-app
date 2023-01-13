@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 
 const arrayInitial = [
   { name: 'Arto Hellas', number: '040-123456' },
@@ -41,21 +44,13 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>filter Phones <input value={filter} onChange={filterPhone} /> </div>
-      <form onSubmit={addPhone}>
-        <h2>Add a new Phone</h2>
-        <div>name: <input value={newName} onChange={changeNewName} /> </div>
-        <div>number: <input value={newNumber} onChange={changeNewNumber} /> </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <div>
-        {
-          persons.map((x, i) => <div key={i}>{x.name} {x.number}</div>)
-        }
-      </div>
+      <Filter filter={filter} filterPhone={filterPhone} />
+
+      <h3>Add a new Phone</h3>
+      <PersonForm addPhone={addPhone} newName={newName} newNumber={newNumber} changeNewName={changeNewName} changeNewNumber={changeNewNumber} />
+
+      <h3>Numbers</h3>
+      <Persons array={persons} />
     </div>
   )
 }
