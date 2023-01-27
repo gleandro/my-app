@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import Note from './components/Note';
 import notesService from './services/notes';
+import './index.css'
 
 const App = () => {
 
     const [notes, setNotes] = useState([])
     const [newNote, setNewNote] = useState('')
     const [showAll, setShowAll] = useState(true)
+    const [errorMessage, setErrorMessage] = useState('some error happened...')
 
     useEffect(() => {
-        notesService.getAll().then(resp => {
-            setNotes(resp.concat({
-                id: 10000,
-                content: 'This note is not saved to server',
-                date: '2019-05-30T17:30:31.098Z',
-                important: true,
-            }))
-        })
+        notesService.getAll().then(resp => setNotes(resp.concat({
+            "id": 1000,
+            "content": "FAKE",
+            "date": "2019-05-30T17:30:31.098Z",
+            "important": false
+        })))
     }, [])
 
     const addNote = (event) => {
@@ -40,17 +40,46 @@ const App = () => {
         const changedNote = { ...note, important: !note.important }
         notesService.update(id, changedNote).then(resp => setNotes(notes.map(note => note.id !== id ? note : resp)))
             .catch(error => {
-                alert(
-                    `the note '${note.content}' was already deleted from server`
+                setErrorMessage(
+                    `Note '${note.content}' was already removed from server`
                 )
+                setTimeout(() => {
+                    setErrorMessage(null)
+                }, 5000)
                 setNotes(notes.filter(n => n.id !== id))
             })
+    }
+
+    const Notification = ({ message }) => {
+        if (message === null)
+            return null
+
+        return (
+            <div className="error">
+                {message}
+            </div>
+        )
+    }
+
+    const Footer = () => {
+        const footerStyle = {
+            color: 'green',
+            fontStyle: 'italic',
+            fontSize: 16
+        }
+        return (
+            <div style={footerStyle}>
+                <br />
+                <em>Note app, Department of Computer Science, University of Helsinki 2020</em>
+            </div>
+        )
     }
 
 
     return (
         <div>
             <h1>Notes</h1>
+            <Notification message={errorMessage} />
             <div>
                 <button onClick={() => setShowAll(!showAll)}>
                     show {showAll ? 'important' : 'all'}
@@ -65,6 +94,7 @@ const App = () => {
                 <input value={newNote} onChange={handleNoteChange} />
                 <button type="submit">save</button>
             </form>
+            <Footer />
         </div>
     )
 }
