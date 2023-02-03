@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/notes'
+//const baseUrl = 'http://localhost:3001/api/notes'
+const baseUrl = 'https://node-notes.up.railway.app/api/notes'
 
 const getAll = () => {
     return axios.get(baseUrl).then(response => response.data)
